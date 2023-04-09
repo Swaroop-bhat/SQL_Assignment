@@ -105,8 +105,12 @@ group by orders.order_id,orders.ordered_date;
 /*3)*/ select customer.customer_name from customer
 left join orders on orders.order_id=customer.customer_id where orders.order_id is null;
 
-/*4)*/ select *from product left join order_details on order_details.order_id=product.product_id where order_details.order_id is null; 
-
+/*4)*/  SELECT *
+FROM product
+LEFT JOIN order_details ON product.product_id = order_details.product_id
+LEFT JOIN orders ON order_details.order_id = orders.order_id
+LEFT JOIN customer ON orders.customer_id = customer.customer_id
+WHERE orders.order_id IS NULL;
 
 
 /*5)*/ select customer.customer_name,sum(order_details.quantity * product.product_price) as totalpurchaseamount
